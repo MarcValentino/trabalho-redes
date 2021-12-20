@@ -3,7 +3,7 @@ import socket
 import cv2
 import struct
 UDP_IP = "127.0.0.1"
-UDP_PORT = 9997
+UDP_PORT = 9999
 MESSAGE = b"Hello, World!"
 CHUNK_SIZE = 1024
 print("UDP target IP: %s" % UDP_IP)
@@ -30,13 +30,14 @@ while True:
     clientSocket, address = sock.accept()
     print("CONEXÃO DE:", address)
     if clientSocket:
-        videoCapture = cv2.VideoCapture('arquivo.mp4')
+        videoCapture = cv2.VideoCapture('./arquivo.mp4')
         while videoCapture.isOpened():
             ret, frame = videoCapture.read()
             if ret:
                 pickledFrame = pickle.dumps(frame)
+                print("PICKLED FRAME:", pickledFrame)
                 message = struct.pack("Q", len(pickledFrame))+pickledFrame
-                sock.sendall(message)
+                clientSocket.sendall(message)
                 cv2.imshow('TRANSIMITINDO', frame)
                 key = cv2.waitKey(1) & 0xFF
                 if key == ord('q'):
