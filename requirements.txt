@@ -1,0 +1,3 @@
+pysocket
+pypickle
+ffmpeg-python
