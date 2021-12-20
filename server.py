@@ -29,8 +29,8 @@ print("ESCUTANDO")
 while True:
     clientSocket, address = sock.accept()
     print("CONEXÃO DE:", address)
+    videoCapture = cv2.VideoCapture('./arquivo.mp4')
     if clientSocket:
-        videoCapture = cv2.VideoCapture('./arquivo.mp4')
         while videoCapture.isOpened():
             ret, frame = videoCapture.read()
             if ret:
@@ -38,7 +38,7 @@ while True:
                 print("PICKLED FRAME:", pickledFrame)
                 message = struct.pack("Q", len(pickledFrame))+pickledFrame
                 clientSocket.sendall(message)
-                cv2.imshow('TRANSIMITINDO', frame)
+                # cv2.imshow('TRANSIMITINDO', frame)
                 key = cv2.waitKey(1) & 0xFF
                 if key == ord('q'):
                     clientSocket.close()

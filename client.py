@@ -32,6 +32,7 @@ while True:
     frameData = data[:messageSize]
     data = data[messageSize:]
     frame = pickle.loads(frameData)
+    cv2.imshow('O QUE CHEGOU', frame)
     key = cv2.waitKey(1) & 0xFF
     if key == ord('e'):
         break
